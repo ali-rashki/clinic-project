@@ -1,64 +1,58 @@
-import Image from "next/image";
+import Header from "@/components/Header";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-white text-slate-900">
+      <Header />
+
+      <main id="home" className="mx-auto max-w-6xl px-6 py-12">
+        <section className="grid items-center gap-10 rounded-[32px] border border-[#5D4FFF]/10 bg-white px-6 py-8 shadow-[0_20px_80px_-36px_rgba(93,79,255,0.55)] md:grid-cols-[1.15fr_0.85fr] md:px-10 md:py-10">
+          <div className="space-y-6">
+            <span className="inline-flex rounded-full bg-[#5D4FFF]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-[#5D4FFF]">
+              Modern clinic care
+            </span>
+            <h1 className="text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              Smart, friendly healthcare for every visit.
+            </h1>
+            <p className="max-w-xl text-base leading-7 text-slate-600 md:text-lg">
+              Streamline appointments, improve patient experience, and keep every consultation organized with a clean digital front door.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="#contact"
+                className="rounded-full bg-[#5D4FFF] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#4b3fe8]"
+              >
+                Schedule now
+              </a>
+              <a
+                href="#services"
+                className="rounded-full border border-[#5D4FFF]/20 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-[#5D4FFF]/5"
+              >
+                View services
+              </a>
+            </div>
+          </div>
+
+          <div className="grid gap-3 rounded-[28px] bg-slate-950 p-4 text-white">
+            <div className="rounded-2xl bg-white/5 p-4">
+              <p className="text-sm uppercase tracking-[0.24em] text-white/60">Today</p>
+              <p className="mt-3 text-3xl font-bold">24 appointments</p>
+              <p className="mt-2 text-sm text-white/70">Across all care teams and virtual rooms.</p>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              <div className="rounded-2xl bg-[#5D4FFF] p-4">
+                <p className="text-sm uppercase tracking-[0.2em] text-white/70">Priority</p>
+                <p className="mt-3 text-2xl font-bold">High</p>
+                <p className="mt-2 text-sm text-white/80">New patient check-ins awaiting response.</p>
+              </div>
+              <div className="rounded-2xl bg-white/5 p-4">
+                <p className="text-sm uppercase tracking-[0.2em] text-white/60">Response</p>
+                <p className="mt-3 text-2xl font-bold">14 min</p>
+                <p className="mt-2 text-sm text-white/70">Average queue time across the clinic.</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
