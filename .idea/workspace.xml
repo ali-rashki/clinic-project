@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3429988d-edce-46ae-8c09-015da5ae14fc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/accounts/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/accounts/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/appointments/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/appointments/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/appointments/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/appointments/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/clinics/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/clinics/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/clinics/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/clinics/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payments/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payments/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/reviews/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/reviews/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/reviews/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/reviews/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/specialties/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/specialties/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/specialties/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/specialties/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tickets/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tickets/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/tickets/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tickets/models.py" afterDir="false" />
-    </list>
+    <list default="true" id="3429988d-edce-46ae-8c09-015da5ae14fc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -156,7 +142,7 @@
       <workItem from="1780074219075" duration="1397000" />
       <workItem from="1780179187903" duration="6183000" />
       <workItem from="1780308344547" duration="183000" />
-      <workItem from="1780424412228" duration="666000" />
+      <workItem from="1780424412228" duration="1101000" />
     </task>
     <servers />
   </component>
