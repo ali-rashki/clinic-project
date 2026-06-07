@@ -162,7 +162,7 @@ export default function Footer() {
             </div>
 
             <span className="text-4xl font-bold text-foreground">
-              دندان‌پزشک
+              کلینیک
             </span>
           </div>
 
