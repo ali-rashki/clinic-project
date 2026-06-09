@@ -108,7 +108,54 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="h-screen lg:h-[calc(100vh-128px)] flex overflow-hidden bg-[color:var(--color-background)]">
+    <div className="h-screen flex overflow-hidden bg-[color:var(--color-background)]">
+
+      {/* ─── FLOATING BACK BUTTON ──────────────────────────────────── */}
+      <button
+        onClick={() => router.push("/")}
+        className="
+          group fixed top-4 right-4 z-50
+          flex items-center
+          bg-white/90 backdrop-blur-sm
+          border border-[color:var(--border)]
+          rounded-full shadow-md
+          overflow-hidden
+          transition-all duration-300 ease-in-out
+          w-14 hover:w-36
+          h-14
+          hover:shadow-lg
+          hover:border-[color:var(--color-primary)]
+        "
+        aria-label="بازگشت به صفحه اصلی"
+      >
+        {/* Arrow icon — fixed width zone, always centered */}
+        <span className="flex items-center justify-center w-14 flex-shrink-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6 text-[color:var(--color-primary)] transition-transform duration-300 group-hover:-translate-x-0.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+
+        {/* Label — fades in on hover, pushed to the left side of expanded area */}
+        <span
+          className="
+            text-sm font-medium whitespace-nowrap
+            text-[color:var(--color-primary)]
+            opacity-0 group-hover:opacity-100
+            transition-opacity duration-200 delay-100
+            pr-3
+          "
+        >
+          بازگشت
+        </span>
+      </button>
+
       {/* ─── LEFT PANEL ─────────────────────────────────────────────── */}
       <div className="relative hidden md:flex w-1/2 flex-col justify-end">
         <Image
@@ -128,11 +175,11 @@ export default function LoginPage() {
               height={36}
               className="rounded-full"
             />
-            <span className="font-bold text-lg tracking-widest uppercase">
+            <span className="font-bold text-3xl tracking-widest uppercase">
               کلینیک
             </span>
           </div>
-          <p className="text-sm text-white/80 leading-relaxed max-w-xs">
+          <p className="text-md text-white/80 leading-relaxed max-w-xs">
             سلامت شما در اولویت است. با خدمات ما، دسترسی آسان و امن به مراقبت‌های پزشکی خواهید داشت.
           </p>
         </div>
@@ -167,7 +214,6 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Login: Use username or email ─ Sign up: Additional fields */}
         {!isSignUp && (
           <div className="mb-4">
             <label
@@ -187,7 +233,6 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Sign up fields */}
         {isSignUp && (
           <>
             <div className="mb-4">
@@ -383,7 +428,6 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Spacer for sign-up mode */}
         {isSignUp && <div className="mb-4" />}
 
         {/* ── Primary action button ── */}
