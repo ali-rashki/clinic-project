@@ -1,33 +1,7 @@
 ﻿"use client"
 import React, { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
-
-const DEFAULT_CLINICS = [
-  {
-    id: 'fallback-1',
-    name: 'کلینیک درسان',
-    city: 'تهران',
-    neighborhood: 'دربند',
-    description: 'کلینیک با تجهیزات جدید و پزشکان متخصص',
-    address: 'خیابان شریعتی کوچه 12',
-  },
-  {
-    id: 'fallback-2',
-    name: 'کلینیک آروا و سلامت',
-    city: 'تهران',
-    neighborhood: 'شمیران',
-    description: 'کلینیک تخصصی و معتبر در ارائه خدمات درمانی',
-    address: 'میدان انقلاب کوچه 5',
-  },
-  {
-    id: 'fallback-3',
-    name: 'کلینیک و درمانگاه',
-    city: 'کرج',
-    neighborhood: 'دزاشیب',
-    description: 'مرکز درمانی متخصص در ارائه خدمات دندانپزشکی و کلینیکی مختلف',
-    address: 'میدان صادقیه خیابان رسالت 7',
-  },
-];
+import BackgroundRing from './BackgroundRing';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8000';
 const CLINICS_API_URL = `${API_BASE_URL}/api/clinics/`;
@@ -53,8 +27,7 @@ export default function ServicesSlider() {
         setClinics(Array.isArray(data) ? data : []);
       } catch (fetchError) {
         console.error('Error fetching clinics:', fetchError);
-        setError('خطای دریافت اطلاعات کلینیک. درحال نمایش اطلاعات پیش‌فرض.');
-        setClinics(DEFAULT_CLINICS);
+        setError('خطای دریافت اطلاعات کلینیک. لطفاً دوباره تلاش کنید.');
       } finally {
         setLoading(false);
       }
@@ -78,7 +51,7 @@ export default function ServicesSlider() {
 
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
-    }
+    } 
 
     return () => observer.disconnect();
   }, []);
@@ -90,7 +63,7 @@ export default function ServicesSlider() {
     }
   };
 
-  const displayClinics = !loading && clinics.length > 0 ? clinics : DEFAULT_CLINICS;
+  const displayClinics = clinics;
 
   return (
     <section
@@ -98,7 +71,13 @@ export default function ServicesSlider() {
       className={`w-full lg:mt-36 mb-20 py-16 px-4 md:px-8 bg-white overflow-hidden transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
     >
       <div className="max-w-7xl mx-auto">
-        
+        <BackgroundRing
+          size={250}
+          thickness={40}
+          opacity={0.5}
+          className="hidden lg:block left-40 top-10 -z-10"
+          centerX={true}
+        />
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
           <div className="max-w-lg">

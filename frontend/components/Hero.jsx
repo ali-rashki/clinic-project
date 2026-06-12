@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import DentalInfoBar from './DentalInfo';
+import BackgroundRing from './BackgroundRing';
 
 const HeroSection = () => {
   return (
@@ -9,7 +10,19 @@ const HeroSection = () => {
 
       {/* ── Hero ── */}
       <div className="relative flex flex-col md:flex-row md:min-h-screen overflow-hidden bg-white">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-primary/25 blur-3xl" />
+        <BackgroundRing
+          size={300}
+          thickness={55}
+          opacity={1}
+          className="hidden lg:block left-1/2 -top-20"
+          centerX={true}
+        />
+        <BackgroundRing
+          size={300}
+          thickness={55}
+          opacity={1}
+          className="hidden lg:block right-0 bottom-20"
+        />
 
         {/* Left Side */}
         <div className="relative flex-1 lg:w-1/2 gap-2 flex flex-col justify-center px-8 py-12 md:px-16 lg:px-24 bg-white/10 backdrop-blur-sm border border-white/20 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.18)]">

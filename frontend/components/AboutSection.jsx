@@ -2,9 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-
-// components/AboutSection.jsx
-// Clean "About Us" section matching the dental clinic design
+import BackgroundRing from "./BackgroundRing";
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
@@ -35,9 +33,21 @@ export default function AboutSection() {
       ref={sectionRef}
       className={`flex flex-col md:flex-row items-center gap-12 px-6 py-16 max-w-6xl mx-auto mt-20 lg:mt-24 transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
     >
-      
+      <BackgroundRing
+        size={250}
+        thickness={40}
+        opacity={0.5}
+        className="hidden lg:block fixed -right-32 -top-20 -translate-y-1/2 -z-10"
+      />
+      <BackgroundRing
+        size={300}
+        thickness={50}
+        opacity={0.5}
+        className="hidden lg:block fixed -left-32 bottom-0 -translate-y-1/2 -z-10"
+      />
       {/* Left: Stacked images */}
       <div className="relative w-full lg:-mr-12 lg:ml-12 md:w-1/2 flex-shrink-0">
+        
         {/* Card containing two photos */}
         <div className="rounded-3xl overflow-hidden shadow-lg bg-[var(--background)]">
           {/* Top photo */}
