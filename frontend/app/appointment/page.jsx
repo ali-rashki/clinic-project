@@ -164,7 +164,7 @@ export default function SpecialtiesPage() {
             <button
               className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
                 tab === 'service'
-                  ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-gray-500 bg-white hover:bg-gray-50'
               }`}
               onClick={() => setTab('service')}

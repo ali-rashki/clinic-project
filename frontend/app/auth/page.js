@@ -156,7 +156,7 @@ export default function LoginPage() {
 
     return (
         <div className="h-screen flex overflow-hidden bg-[color:var(--color-background)]">
-            {/* ... Floating back button (unchanged) ... */}
+            {/* Floating back button */}
             <button
                 onClick={() => router.push("/")}
                 className="group fixed top-4 right-4 z-50 flex items-center bg-white/90 backdrop-blur-sm border border-[color:var(--border)] rounded-full shadow-md overflow-hidden transition-all duration-300 ease-in-out w-14 hover:w-36 h-14 hover:shadow-lg hover:border-[color:var(--color-primary)]"
@@ -175,7 +175,7 @@ export default function LoginPage() {
         </span>
             </button>
 
-            {/* Left panel (unchanged) */}
+            {/* Left panel */}
             <div className="relative hidden md:flex w-1/2 flex-col justify-end">
                 <Image src="/doctor-hero.jpg" alt="Healthcare professional" fill className="object-cover" priority/>
                 <div
@@ -191,243 +191,212 @@ export default function LoginPage() {
                 </div>
             </div>
 
-            {/* Right panel */}
-            <div
-                className="flex flex-col justify-center w-full md:w-1/2 bg-[color:var(--color-background)] px-8 md:px-16 pt-20 pb-8 md:pt-24 md:pb-14 overflow-y-auto">
-                <div className="mb-8 lg:mt-0 mt-50">
-                    <Image src="/clinic-icon.jpg" alt="clinic icon" width={48} height={48} className="rounded-full"/>
-                </div>
+            {/* Right panel — no justify-center, just overflow-y-auto */}
+            <div className="flex flex-col w-full md:w-1/2 flex-1 min-h-0 bg-[color:var(--color-background)] px-8 md:px-16 overflow-y-auto">
+                {/* Inner wrapper: my-auto centers when content fits, py-* gives breathing room when it scrolls */}
+                <div className="flex flex-col my-auto py-16 pt-20 md:pt-24">
 
-                <h1 className="text-3xl font-bold text-[color:var(--color-foreground)] mb-1">
-                    {isSignUp ? "ایجاد حساب کاربری" : "ورود به حساب"}
-                </h1>
-                <p className="text-sm text-[color:var(--color-muted)] mb-6">
-                    {isSignUp ? "اطلاعات خود را وارد کنید تا حساب جدیدی برای شما ایجاد شود." : "برای دسترسی به خدمات کلینیک، اطلاعات حساب خود را وارد کنید."}
-                </p>
-
-                {error && (
-                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                        {error}
+                    <div className="mb-8">
+                        <Image src="/clinic-icon.jpg" alt="clinic icon" width={48} height={48} className="rounded-full"/>
                     </div>
-                )}
 
-                {!isSignUp && (
-                    <div className="mb-4">
-                        <label htmlFor="loginUsername"
-                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام
-                            کاربری یا ایمیل</label>
-                        <input id="loginUsername" ref={loginIdentifierRef} type="text"
-                               placeholder="نام کاربری یا ایمیل خود را وارد کنید" defaultValue=""
-                               className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                    </div>
-                )}
+                    <h1 className="text-3xl font-bold text-[color:var(--color-foreground)] mb-1">
+                        {isSignUp ? "ایجاد حساب کاربری" : "ورود به حساب"}
+                    </h1>
+                    <p className="text-sm text-[color:var(--color-muted)] mb-6">
+                        {isSignUp ? "اطلاعات خود را وارد کنید تا حساب جدیدی برای شما ایجاد شود." : "برای دسترسی به خدمات کلینیک، اطلاعات حساب خود را وارد کنید."}
+                    </p>
 
-                {isSignUp && (
-                    <>
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                            {error}
+                        </div>
+                    )}
+
+                    {!isSignUp && (
                         <div className="mb-4">
-                            <label htmlFor="username"
+                            <label htmlFor="loginUsername"
                                    className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام
-                                کاربری</label>
-                            <input id="username" ref={usernameRef} type="text" placeholder="نام کاربری خود را وارد کنید"
-                                   defaultValue=""
+                                کاربری یا ایمیل</label>
+                            <input id="loginUsername" ref={loginIdentifierRef} type="text"
+                                   placeholder="نام کاربری یا ایمیل خود را وارد کنید" defaultValue=""
                                    className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="email"
-                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">ایمیل</label>
-                            <input id="email" ref={emailRef} type="email" placeholder="ایمیل خود را وارد کنید"
-                                   defaultValue=""
-                                   className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                        </div>
+                    )}
 
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                            <div>
-                                <label htmlFor="firstName"
-                                       className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام</label>
-                                <input id="firstName" ref={firstNameRef} type="text" placeholder="نام شما"
-                                       defaultValue=""
-                                       className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                            </div>
-                            <div>
-                                <label htmlFor="lastName"
+                    {isSignUp && (
+                        <>
+                            <div className="mb-4">
+                                <label htmlFor="username"
                                        className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام
-                                    خانوادگی</label>
-                                <input id="lastName" ref={lastNameRef} type="text" placeholder="نام خانوادگی"
+                                    کاربری</label>
+                                <input id="username" ref={usernameRef} type="text" placeholder="نام کاربری خود را وارد کنید"
                                        defaultValue=""
                                        className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
                             </div>
-                        </div>
+                            <div className="mb-4">
+                                <label htmlFor="email"
+                                       className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">ایمیل</label>
+                                <input id="email" ref={emailRef} type="email" placeholder="ایمیل خود را وارد کنید"
+                                       defaultValue=""
+                                       className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
+                            </div>
 
-                        <div className="mb-4">
-                            <label htmlFor="phone"
-                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">شماره
-                                تلفن</label>
-                            <input id="phone" ref={phoneRef} type="tel" placeholder="09123456789" defaultValue=""
-                                   className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                        </div>
-
-                        <div className="mb-4">
-                            <label htmlFor="role"
-                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نوع
-                                حساب</label>
-                            <select
-                                id="role"
-                                ref={roleRef}
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"
-                            >
-                                <option value="patient">بیمار</option>
-                                <option value="doctor">پزشک</option>
-                            </select>
-                        </div>
-
-                        {/* Doctor-specific fields - only shown when role is doctor */}
-                        {role === "doctor" && (
-                            <div className="doctor-fields border-t border-[color:var(--border)] pt-4 mt-2 space-y-4"
-                                 style={{display: 'block'}}>
-                                <div className="mb-4">
-                                    <label htmlFor="licenseNumber"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">شماره
-                                        نظام پزشکی</label>
-                                    <input id="licenseNumber" ref={licenseNumberRef} type="text"
-                                           placeholder="شماره نظام پزشکی را وارد کنید" defaultValue=""
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                <div>
+                                    <label htmlFor="firstName"
+                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام</label>
+                                    <input id="firstName" ref={firstNameRef} type="text" placeholder="نام شما"
+                                           defaultValue=""
                                            className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
                                 </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="specialty"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">تخصص</label>
-                                    <select id="specialty" ref={specialtyIdRef}
-                                            className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"
-                                            disabled={loadingSpecialties}>
-                                        <option value="">انتخاب تخصص</option>
-                                        {specialties.map((spec) => (
-                                            <option key={spec.id} value={spec.id}>{spec.name}</option>
-                                        ))}
-                                    </select>
-                                    {loadingSpecialties &&
-                                        <p className="text-xs text-[color:var(--color-muted)] mt-1">در حال بارگذاری
-                                            تخصص‌ها...</p>}
-                                </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="consultationFee"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">هزینه
-                                        ویزیت (تومان)</label>
-                                    <input id="consultationFee" ref={consultationFeeRef} type="number"
-                                           placeholder="مثلاً 150000" defaultValue=""
+                                <div>
+                                    <label htmlFor="lastName"
+                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام
+                                        خانوادگی</label>
+                                    <input id="lastName" ref={lastNameRef} type="text" placeholder="نام خانوادگی"
+                                           defaultValue=""
                                            className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-3 mb-4">
-                                    <div>
-                                        <label htmlFor="gender"
-                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">جنسیت</label>
-                                        <select id="gender" ref={genderRef}
-                                                className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]">
-                                            <option value="male">آقا</option>
-                                            <option value="female">خانم</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="visitType"
-                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نوع
-                                            ویزیت</label>
-                                        <select id="visitType" ref={visitTypeRef}
-                                                className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]">
-                                            <option value="in_person">حضوری</option>
-                                            <option value="online">آنلاین</option>
-                                            <option value="both">هر دو</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="bio"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">بیوگرافی</label>
-                                    <textarea id="bio" ref={bioRef} rows="3" placeholder="درباره خودتان بنویسید..."
-                                              className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"></textarea>
-                                </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="experienceYears"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">سال
-                                        سابقه</label>
-                                    <input id="experienceYears" ref={experienceYearsRef} type="number"
-                                           placeholder="مثلاً 5" defaultValue="0"
-                                           className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                                </div>
-
-                                {/* شهر و آدرس مطب */}
-                                <div className="mb-4">
-                                    <label htmlFor="city"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">
-                                        شهر مطب
-                                    </label>
-                                    <input id="city" ref={cityRef} type="text" placeholder="مثلاً تهران" defaultValue=""
-                                           className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
-                                </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="address"
-                                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">
-                                        آدرس مطب
-                                    </label>
-                                    <textarea id="address" ref={addressRef} rows="2"
-                                              placeholder="آدرس دقیق مطب خود را وارد کنید..."
-                                              className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"></textarea>
                                 </div>
                             </div>
-                        )}
-                    </>
-                )}
 
-                {/* Password field */}
-                <div className={isSignUp ? "mb-4" : "mb-2"}>
-                    <label htmlFor="password"
-                           className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">رمز
-                        عبور</label>
-                    <div className="relative">
-                        <input id="password" ref={passwordRef} type={showPassword ? "text" : "password"}
-                               placeholder="رمز عبور خود را وارد کنید" defaultValue=""
-                               className="w-full border rounded-lg px-4 py-3 pr-11 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-white"/>
-                        <button type="button" onClick={() => setShowPassword((prev) => !prev)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--color-muted)] hover:text-[color:var(--color-foreground)] transition"
-                                aria-label={showPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}>
-                            {showPassword ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-9-7s4-7 9-7c1.06 0 2.08.175 3.025.5M15 12a3 3 0 01-3 3m6.364-5.364A9.956 9.956 0 0121 12c0 3-4 7-9 7m0 0L3 3m18 18L3 3"/>
-                                </svg>
-                            ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
+                            <div className="mb-4">
+                                <label htmlFor="phone"
+                                       className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">شماره
+                                    تلفن</label>
+                                <input id="phone" ref={phoneRef} type="tel" placeholder="09123456789" defaultValue=""
+                                       className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
+                            </div>
+
+                            <div className="mb-4">
+                                <label htmlFor="role"
+                                       className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نوع
+                                    حساب</label>
+                                <select
+                                    id="role"
+                                    ref={roleRef}
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"
+                                >
+                                    <option value="patient">بیمار</option>
+                                    <option value="doctor">پزشک</option>
+                                </select>
+                            </div>
+
+                            {/* Doctor-specific fields */}
+                            {role === "doctor" && (
+                                <div className="doctor-fields border-t border-[color:var(--border)] pt-4 mt-2 space-y-4"
+                                     style={{display: 'block'}}>
+                                    <div className="mb-4">
+                                        <label htmlFor="licenseNumber"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">شماره
+                                            نظام پزشکی</label>
+                                        <input id="licenseNumber" ref={licenseNumberRef} type="text"
+                                               placeholder="شماره نظام پزشکی را وارد کنید" defaultValue=""
+                                               className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="specialty"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">تخصص</label>
+                                        <select id="specialty" ref={specialtyIdRef}
+                                                className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"
+                                                disabled={loadingSpecialties}>
+                                            <option value="">انتخاب تخصص</option>
+                                            {specialties.map((spec) => (
+                                                <option key={spec.id} value={spec.id}>{spec.name}</option>
+                                            ))}
+                                        </select>
+                                        {loadingSpecialties &&
+                                            <p className="text-xs text-[color:var(--color-muted)] mt-1">در حال بارگذاری
+                                                تخصص‌ها...</p>}
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="consultationFee"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">هزینه
+                                            ویزیت (تومان)</label>
+                                        <input id="consultationFee" ref={consultationFeeRef} type="number"
+                                               placeholder="مثلاً 150000" defaultValue=""
+                                               className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3 mb-4">
+                                        <div>
+                                            <label htmlFor="gender"
+                                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">جنسیت</label>
+                                            <select id="gender" ref={genderRef}
+                                                    className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]">
+                                                <option value="male">آقا</option>
+                                                <option value="female">خانم</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="visitType"
+                                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نوع
+                                                ویزیت</label>
+                                            <select id="visitType" ref={visitTypeRef}
+                                                    className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]">
+                                                <option value="in_person">حضوری</option>
+                                                <option value="online">آنلاین</option>
+                                                <option value="both">هر دو</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="bio"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">بیوگرافی</label>
+                                        <textarea id="bio" ref={bioRef} rows="3" placeholder="درباره خودتان بنویسید..."
+                                                  className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"></textarea>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="experienceYears"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">سال
+                                            سابقه</label>
+                                        <input id="experienceYears" ref={experienceYearsRef} type="number"
+                                               placeholder="مثلاً 5" defaultValue="0"
+                                               className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="city"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">
+                                            شهر مطب
+                                        </label>
+                                        <input id="city" ref={cityRef} type="text" placeholder="مثلاً تهران" defaultValue=""
+                                               className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label htmlFor="address"
+                                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">
+                                            آدرس مطب
+                                        </label>
+                                        <textarea id="address" ref={addressRef} rows="2"
+                                                  placeholder="آدرس دقیق مطب خود را وارد کنید..."
+                                                  className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"></textarea>
+                                    </div>
+                                </div>
                             )}
-                        </button>
-                    </div>
-                </div>
+                        </>
+                    )}
 
-                {isSignUp && (
-                    <div className="mb-2">
-                        <label htmlFor="confirmPassword"
-                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">تکرار رمز
+                    {/* Password field */}
+                    <div className={isSignUp ? "mb-4" : "mb-2"}>
+                        <label htmlFor="password"
+                               className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">رمز
                             عبور</label>
                         <div className="relative">
-                            <input id="confirmPassword" ref={confirmPasswordRef}
-                                   type={showConfirmPassword ? "text" : "password"}
-                                   placeholder="رمز عبور را دوباره وارد کنید" defaultValue=""
+                            <input id="password" ref={passwordRef} type={showPassword ? "text" : "password"}
+                                   placeholder="رمز عبور خود را وارد کنید" defaultValue=""
                                    className="w-full border rounded-lg px-4 py-3 pr-11 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-white"/>
-                            <button type="button" onClick={() => setShowConfirmPassword((prev) => !prev)}
+                            <button type="button" onClick={() => setShowPassword((prev) => !prev)}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--color-muted)] hover:text-[color:var(--color-foreground)] transition"
-                                    aria-label={showConfirmPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}>
-                                {showConfirmPassword ? (
+                                    aria-label={showPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}>
+                                {showPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -445,30 +414,64 @@ export default function LoginPage() {
                             </button>
                         </div>
                     </div>
-                )}
 
-                {!isSignUp && (
-                    <div className="text-right mb-6">
-                        <a href="#" className="text-sm font-medium text-[color:var(--color-primary)] hover:underline">فراموشی
-                            رمز عبور؟</a>
-                    </div>
-                )}
+                    {isSignUp && (
+                        <div className="mb-2">
+                            <label htmlFor="confirmPassword"
+                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">تکرار رمز
+                                عبور</label>
+                            <div className="relative">
+                                <input id="confirmPassword" ref={confirmPasswordRef}
+                                       type={showConfirmPassword ? "text" : "password"}
+                                       placeholder="رمز عبور را دوباره وارد کنید" defaultValue=""
+                                       className="w-full border rounded-lg px-4 py-3 pr-11 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-white"/>
+                                <button type="button" onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[color:var(--color-muted)] hover:text-[color:var(--color-foreground)] transition"
+                                        aria-label={showConfirmPassword ? "پنهان کردن رمز عبور" : "نمایش رمز عبور"}>
+                                    {showConfirmPassword ? (
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-9-7s4-7 9-7c1.06 0 2.08.175 3.025.5M15 12a3 3 0 01-3 3m6.364-5.364A9.956 9.956 0 0121 12c0 3-4 7-9 7m0 0L3 3m18 18L3 3"/>
+                                        </svg>
+                                    ) : (
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
-                {isSignUp && <div className="mb-4"/>}
+                    {!isSignUp && (
+                        <div className="text-right mb-6">
+                            <a href="#" className="text-sm font-medium text-[color:var(--color-primary)] hover:underline">فراموشی
+                                رمز عبور؟</a>
+                        </div>
+                    )}
 
-                <button onClick={isSignUp ? handleSignUp : handleLogin} disabled={loading}
-                        className="w-full bg-[color:var(--color-primary)] text-[color:var(--color-primary-foreground)] font-medium py-3 rounded-full hover:opacity-90 active:scale-[0.98] transition mb-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                    {loading ? (isSignUp ? "در حال ثبت‌نام..." : "در حال ورود...") : (isSignUp ? "ثبت نام" : "ورود")}
-                </button>
+                    {isSignUp && <div className="mb-4"/>}
 
-                <p className="text-center text-sm text-[color:var(--color-muted)]">
-                    {isSignUp ? "قبلاً حساب کاربری دارید؟" : "هنوز حساب کاربری ندارید؟"}{" "}
-                    <button type="button" onClick={isSignUp ? switchToLogin : switchToSignUp}
-                            className="font-medium text-[color:var(--color-primary)] hover:underline bg-transparent border-none cursor-pointer p-0">
-                        {isSignUp ? "ورود" : "ثبت نام"}
+                    <button onClick={isSignUp ? handleSignUp : handleLogin} disabled={loading}
+                            className="w-full bg-[color:var(--color-primary)] text-[color:var(--color-primary-foreground)] font-medium py-3 rounded-full hover:opacity-90 active:scale-[0.98] transition mb-3 disabled:opacity-50 disabled:cursor-not-allowed">
+                        {loading ? (isSignUp ? "در حال ثبت‌نام..." : "در حال ورود...") : (isSignUp ? "ثبت نام" : "ورود")}
                     </button>
-                </p>
-            </div>
+
+                    <p className="text-center text-sm text-[color:var(--color-muted)]">
+                        {isSignUp ? "قبلاً حساب کاربری دارید؟" : "هنوز حساب کاربری ندارید؟"}{" "}
+                        <button type="button" onClick={isSignUp ? switchToLogin : switchToSignUp}
+                                className="font-medium text-[color:var(--color-primary)] hover:underline bg-transparent border-none cursor-pointer p-0">
+                            {isSignUp ? "ورود" : "ثبت نام"}
+                        </button>
+                    </p>
+
+                </div> {/* end my-auto inner wrapper */}
+            </div> {/* end right panel */}
         </div>
     );
 }
