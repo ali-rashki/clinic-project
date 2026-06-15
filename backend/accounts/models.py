@@ -34,4 +34,7 @@ class User(AbstractUser):
         return role_map.get(self.role, self.role)
 
     def __str__(self):
-        return f"{self.get_full_name()} - {self.get_role_display()}"
+        full_name = self.get_full_name().strip()
+        if full_name:
+            return f"{full_name} ({self.username})"
+        return f"{self.username} - {self.get_role_display()}"

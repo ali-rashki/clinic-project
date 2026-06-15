@@ -41,10 +41,15 @@ class DoctorProfile(models.Model):
         ('both', 'هر دو'),
     )
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_profile')
-    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name='doctors')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_profile',
+                                verbose_name='کاربر')
+    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE, related_name='doctors', verbose_name='تخصص')
     clinic = models.ForeignKey('clinics.Clinic', on_delete=models.SET_NULL, null=True, blank=True,
-                               related_name='doctors')
+                               related_name='doctors', verbose_name='کلینیک')
+
+    # فیلدهای مستقل برای مطب شخصی پزشک
+    city = models.CharField(max_length=100, blank=True, null=True, verbose_name="شهر")
+    address = models.TextField(blank=True, null=True, verbose_name="آدرس مطب")
 
     consultation_fee = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="هزینه ویزیت")
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, verbose_name="جنسیت")
