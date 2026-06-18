@@ -91,7 +91,7 @@ export default function AboutSection() {
             className="w-14 h-14 rounded-xl object-cover"
           />
           <div>
-            <p className="font-bold text-[var(--foreground)]">دکتر مجتبی خامنه ای</p>
+            <p className="font-bold text-[var(--foreground)]">دکتر رامین سیرجانی</p>
             <p className="text-sm text-[var(--muted)]">دندان‌پزشک در کلینیک جهانی</p>
           </div>
         </div>
