@@ -10,30 +10,28 @@ class SpecialtyListView(generics.ListAPIView):
     queryset = Specialty.objects.all()
     serializer_class = SpecialtySerializer
     permission_classes = [permissions.AllowAny]
+    pagination_class = None  # تخصص‌ها نیاز به pagination ندارن
 
 
 class DoctorListView(generics.ListAPIView):
     """لیست پزشکان تأیید شده با قابلیت جستجو و فیلتر"""
-    queryset = DoctorProfile.objects.filter(is_approved=True, user__is_verified=True)
     serializer_class = DoctorProfileSerializer
     permission_classes = [permissions.AllowAny]
 
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
 
-    # فیلترهای دقیق
     filterset_fields = {
         'specialty__id': ['exact'],
-        'specialty__name': ['icontains'],  # تغییر کرد
+        'specialty__name': ['icontains'],
         'gender': ['exact'],
         'visit_type': ['exact'],
-        'city': ['icontains'],  # تغییر کرد
+        'city': ['icontains'],
         'consultation_fee': ['lte', 'gte'],
         'experience_years': ['gte', 'lte'],
         'clinic__id': ['exact'],
-        'clinic__city': ['icontains'],  # تغییر کرد
+        'clinic__city': ['icontains'],
     }
 
-    # جستجوی متنی
     search_fields = [
         'user__first_name',
         'user__last_name',
@@ -45,3 +43,22 @@ class DoctorListView(generics.ListAPIView):
 
     ordering_fields = ['consultation_fee', 'experience_years', 'user__first_name']
     ordering = ['user__first_name']
+
+    def get_queryset(self):
+        # FIX 7: select_related برای جلوگیری از N+1 query
+        base_qs = DoctorProfile.objects.select_related(
+            'user',
+            'specialty',
+            'clinic'
+        )
+
+        user = self.request.user
+        if user.is_authenticated and user.is_staff:
+            return base_qs.all()
+
+        public_qs = base_qs.filter(is_verified=True)
+        if user.is_authenticated and getattr(user, 'role', None) == 'doctor':
+            own_qs = base_qs.filter(user=user)
+            return (public_qs | own_qs).distinct()
+
+        return public_qs

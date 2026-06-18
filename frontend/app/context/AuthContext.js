@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if user is already logged in on mount
     const checkAuth = async () => {
       const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
       if (token) {
@@ -21,7 +20,6 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(true);
           localStorage.setItem('user', JSON.stringify(userData));
         } catch (error) {
-          // Token might be invalid, clear it
           authService.logout();
           setUser(null);
           setIsAuthenticated(false);
@@ -29,7 +27,6 @@ export const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     };
-
     checkAuth();
   }, []);
 
@@ -37,13 +34,10 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await authService.login(username, password);
-      
-      // Get user data - either from response or fetch separately
       let userData = response.user;
       if (!userData) {
         userData = await authService.getCurrentUser();
       }
-      
       setUser(userData);
       setIsAuthenticated(true);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -58,15 +52,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (userData) => {
+    console.log("📤 [AuthContext] register called with:", userData);
     setLoading(true);
     try {
       const response = await authService.register(userData);
+      console.log("✅ [AuthContext] register response:", response);
       const user = response.user;
       setUser(user);
       setIsAuthenticated(true);
       localStorage.setItem('user', JSON.stringify(user));
       return { success: true, data: user };
     } catch (error) {
+      console.error("❌ [AuthContext] register error:", error);
       setIsAuthenticated(false);
       setUser(null);
       return { success: false, error };
@@ -104,3 +101,6 @@ export const useAuth = () => {
   }
   return context;
 };
+
+// ✅ این خط رو اضافه کن
+export { AuthProvider as default };

@@ -90,7 +90,6 @@ export default function LoginPage() {
             return;
         }
 
-        // Prepare base payload
         const payload = {
             username,
             email,
@@ -102,7 +101,6 @@ export default function LoginPage() {
             role: selectedRole,
         };
 
-        // Add doctor-specific fields if role is doctor
         if (selectedRole === "doctor") {
             payload.specialty_id = parseInt(getValue(specialtyIdRef));
             payload.consultation_fee = parseFloat(getValue(consultationFeeRef));
@@ -121,14 +119,96 @@ export default function LoginPage() {
             if (result.success) {
                 router.push("/");
             } else {
-                setError(result.error?.detail || result.error?.username?.[0] || "خطا در ثبت‌نام");
+                // نمایش خطاهای فارسی
+                const errorMessage = getFriendlyErrorMessage(result.error);
+                setError(errorMessage);
             }
         } catch (err) {
-            setError("خطا در ارتباط با سرور");
-            console.error(err);
+            console.error("❌ Error:", err);
+            const errorMessage = getFriendlyErrorMessage(err);
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
+    }
+
+// تابع تبدیل خطاهای انگلیسی به فارسی
+    function getFriendlyErrorMessage(error) {
+        if (!error) return "خطایی رخ داده است. لطفاً دوباره تلاش کنید.";
+
+        if (typeof error === 'object') {
+            const messages = [];
+
+            if (error.password) {
+                const msg = Array.isArray(error.password) ? error.password.join(' ') : error.password;
+                if (msg.includes('short') || msg.includes('کوتاه')) {
+                    messages.push('🔑 رمز عبور باید حداقل ۸ کاراکتر باشد.');
+                } else if (msg.includes('common') || msg.includes('رایج')) {
+                    messages.push('🔑 رمز عبور خیلی ساده است. از ترکیب حروف بزرگ، کوچک، عدد و نماد استفاده کنید.');
+                } else if (msg.includes('numeric')) {
+                    messages.push('🔑 رمز عبور نمی‌تواند فقط عدد باشد.');
+                } else {
+                    messages.push(msg);
+                }
+            }
+
+            if (error.username) {
+                const msg = Array.isArray(error.username) ? error.username[0] : error.username;
+                if (msg.includes('already exists')) {
+                    messages.push('👤 این نام کاربری قبلاً ثبت شده است. نام دیگری انتخاب کنید.');
+                } else {
+                    messages.push(msg);
+                }
+            }
+
+            if (error.phone) {
+                const msg = Array.isArray(error.phone) ? error.phone[0] : error.phone;
+                if (msg.includes('already exists')) {
+                    messages.push('📱 این شماره تلفن قبلاً ثبت شده است. شماره دیگری وارد کنید.');
+                } else {
+                    messages.push(msg);
+                }
+            }
+
+            if (error.email) {
+                const msg = Array.isArray(error.email) ? error.email[0] : error.email;
+                if (msg.includes('already exists')) {
+                    messages.push('📧 این ایمیل قبلاً ثبت شده است. ایمیل دیگری وارد کنید.');
+                } else if (msg.includes('valid')) {
+                    messages.push('📧 لطفاً یک ایمیل معتبر وارد کنید.');
+                } else {
+                    messages.push(msg);
+                }
+            }
+
+            if (error.license_number) {
+                messages.push('🆔 شماره نظام پزشکی الزامی است.');
+            }
+
+            if (error.specialty_id) {
+                messages.push('🏥 انتخاب تخصص الزامی است.');
+            }
+
+            if (error.consultation_fee) {
+                messages.push('💰 هزینه ویزیت الزامی است.');
+            }
+
+            if (error.detail) {
+                messages.push(error.detail);
+            }
+
+            if (messages.length > 0) {
+                return messages.join('\n');
+            }
+
+            return 'اطلاعات وارد شده صحیح نیست. لطفاً همه فیلدها را بررسی کنید.';
+        }
+
+        if (typeof error === 'string') {
+            return error;
+        }
+
+        return 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.';
     }
 
     function switchToSignUp() {
@@ -192,12 +272,14 @@ export default function LoginPage() {
             </div>
 
             {/* Right panel — no justify-center, just overflow-y-auto */}
-            <div className="flex flex-col w-full md:w-1/2 flex-1 min-h-0 bg-[color:var(--color-background)] px-8 md:px-16 overflow-y-auto">
+            <div
+                className="flex flex-col w-full md:w-1/2 flex-1 min-h-0 bg-[color:var(--color-background)] px-8 md:px-16 overflow-y-auto">
                 {/* Inner wrapper: my-auto centers when content fits, py-* gives breathing room when it scrolls */}
                 <div className="flex flex-col my-auto py-16 pt-20 md:pt-24">
 
                     <div className="mb-8">
-                        <Image src="/clinic-icon.jpg" alt="clinic icon" width={48} height={48} className="rounded-full"/>
+                        <Image src="/clinic-icon.jpg" alt="clinic icon" width={48} height={48}
+                               className="rounded-full"/>
                     </div>
 
                     <h1 className="text-3xl font-bold text-[color:var(--color-foreground)] mb-1">
@@ -230,7 +312,8 @@ export default function LoginPage() {
                                 <label htmlFor="username"
                                        className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">نام
                                     کاربری</label>
-                                <input id="username" ref={usernameRef} type="text" placeholder="نام کاربری خود را وارد کنید"
+                                <input id="username" ref={usernameRef} type="text"
+                                       placeholder="نام کاربری خود را وارد کنید"
                                        defaultValue=""
                                        className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
                             </div>
@@ -366,7 +449,8 @@ export default function LoginPage() {
                                                className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">
                                             شهر مطب
                                         </label>
-                                        <input id="city" ref={cityRef} type="text" placeholder="مثلاً تهران" defaultValue=""
+                                        <input id="city" ref={cityRef} type="text" placeholder="مثلاً تهران"
+                                               defaultValue=""
                                                className="w-full border rounded-lg px-4 py-3 text-sm text-[color:var(--color-foreground)] placeholder:text-[color:var(--color-muted)] outline-none transition focus:ring-2 focus:ring-[color:var(--color-primary)] focus:border-transparent border-[color:var(--border)] bg-[color:var(--color-background)]"/>
                                     </div>
 
@@ -418,7 +502,8 @@ export default function LoginPage() {
                     {isSignUp && (
                         <div className="mb-2">
                             <label htmlFor="confirmPassword"
-                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">تکرار رمز
+                                   className="block text-sm font-medium text-[color:var(--color-foreground)] mb-1">تکرار
+                                رمز
                                 عبور</label>
                             <div className="relative">
                                 <input id="confirmPassword" ref={confirmPasswordRef}
@@ -450,7 +535,8 @@ export default function LoginPage() {
 
                     {!isSignUp && (
                         <div className="text-right mb-6">
-                            <a href="#" className="text-sm font-medium text-[color:var(--color-primary)] hover:underline">فراموشی
+                            <a href="#"
+                               className="text-sm font-medium text-[color:var(--color-primary)] hover:underline">فراموشی
                                 رمز عبور؟</a>
                         </div>
                     )}
@@ -470,8 +556,10 @@ export default function LoginPage() {
                         </button>
                     </p>
 
-                </div> {/* end my-auto inner wrapper */}
-            </div> {/* end right panel */}
+                </div>
+                {/* end my-auto inner wrapper */}
+            </div>
+            {/* end right panel */}
         </div>
     );
 }

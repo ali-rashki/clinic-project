@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 
 class Specialty(models.Model):
@@ -58,7 +59,21 @@ class DoctorProfile(models.Model):
     bio = models.TextField(blank=True, null=True, verbose_name="بیوگرافی")
     experience_years = models.PositiveIntegerField(default=0, verbose_name="سال سابقه")
     license_number = models.CharField(max_length=50, unique=True, verbose_name="شماره نظام پزشکی")
-    is_approved = models.BooleanField(default=False, verbose_name="تایید شده")
+    is_verified = models.BooleanField(default=False, verbose_name="تایید شده توسط ادمین")
+    approved_at = models.DateTimeField(null=True, blank=True, verbose_name="تاریخ تایید")
+    approved_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+                                    related_name='approved_doctors', verbose_name='تایید شده توسط')
+    is_approved = models.BooleanField(default=False, verbose_name="تایید شده (قدیمی)")
+
+    def save(self, *args, **kwargs):
+        if self.is_verified:
+            self.is_approved = True
+            if not self.approved_at:
+                self.approved_at = timezone.now()
+        elif self.is_approved and not self.is_verified:
+            self.is_verified = True
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"دکتر {self.user.get_full_name()} - {self.specialty.name}"

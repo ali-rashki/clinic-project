@@ -1,32 +1,60 @@
-import API from './api';
-
 export const authService = {
     login: async (username, password) => {
         try {
-            const response = await API.post('/accounts/login/', {
-                username,
-                password,
+            const response = await fetch('http://127.0.0.1:8000/api/accounts/login/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
             });
-            if (response.data.access) {
-                localStorage.setItem('access_token', response.data.access);
-                localStorage.setItem('refresh_token', response.data.refresh);
+            const data = await response.json();
+            if (data.access) {
+                localStorage.setItem('access_token', data.access);
+                localStorage.setItem('refresh_token', data.refresh);
             }
-            return response.data;
+            return data;
         } catch (error) {
-            throw error.response?.data || error;
+            console.error("❌ Login error:", error);
+            throw error;
         }
     },
 
     register: async (userData) => {
         try {
-            const response = await API.post('/accounts/register/', userData);
-            if (response.data.tokens?.access) {
-                localStorage.setItem('access_token', response.data.tokens.access);
-                localStorage.setItem('refresh_token', response.data.tokens.refresh);
+            console.log("📤 [authService] register request:", userData);
+            const response = await fetch('http://127.0.0.1:8000/api/accounts/register/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(userData)
+            });
+            console.log("📤 [authService] register status:", response.status);
+
+            // اول text رو بگیر تا ببینیم چی برگشت داده شده
+            const text = await response.text();
+            console.log("📤 [authService] raw response:", text);
+
+            // سعی کن JSON parse کنی
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.error("❌ [authService] not JSON:", text);
+                throw new Error("Server returned non-JSON response");
             }
-            return response.data;
+
+            console.log("📤 [authService] register response data:", data);
+            if (response.ok) {
+                if (data.tokens?.access) {
+                    localStorage.setItem('access_token', data.tokens.access);
+                    localStorage.setItem('refresh_token', data.tokens.refresh);
+                }
+                return data;
+            } else {
+                console.error("❌ [authService] register error response:", data);
+                throw data;
+            }
         } catch (error) {
-            throw error.response?.data || error;
+            console.error("❌ [authService] register error:", error);
+            throw error;
         }
     },
 
@@ -38,10 +66,14 @@ export const authService = {
 
     getCurrentUser: async () => {
         try {
-            const response = await API.get('/accounts/profile/');
-            return response.data;
+            const token = localStorage.getItem('access_token');
+            const response = await fetch('http://127.0.0.1:8000/api/accounts/profile/', {
+                headers: {'Authorization': `Bearer ${token}`}
+            });
+            return await response.json();
         } catch (error) {
-            throw error.response?.data || error;
+            console.error("❌ GetCurrentUser error:", error);
+            throw error;
         }
     },
 
