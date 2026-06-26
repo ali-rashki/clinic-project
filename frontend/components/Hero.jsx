@@ -55,7 +55,7 @@ const HeroSection = () => {
               className='w-full h-full object-cover'
               height={1000}
               width={800}
-              loading='eager'
+              priority
             />
           </div>
         </div>
