@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 const navItems = [
   { label: "خانه", href: "/" },
-  { label: "نوبت دهی مطب", href: "/appointment" },
+  { label: "نوبت دهی مطب", href: "/doctors" },
   { label: "درباره ما", href: "#aboutus" },
   { label: "تماس با ما", href: "#contact" },
 ];
