@@ -13,6 +13,7 @@ class SpecialtyAdmin(admin.ModelAdmin):
     def doctor_count(self, obj):
         count = obj.doctors.filter(is_approved=True).count()
         return f"{count} پزشک"
+
     doctor_count.short_description = 'تعداد پزشکان تایید شده'
 
 
@@ -77,6 +78,8 @@ class DoctorProfileAdmin(admin.ModelAdmin):
                 'gender',
                 'visit_type',
                 'bio',
+                'profile_picture',
+                'profile_picture_url',
             ),
         }),
         ('📍 مکان', {
@@ -105,20 +108,24 @@ class DoctorProfileAdmin(admin.ModelAdmin):
         name = obj.user.get_full_name() or obj.user.username
         phone = obj.user.phone or ''
         return f"{name} - {phone}"
+
     doctor_full_name.short_description = 'نام پزشک'
 
     def verification_status(self, obj):
         if obj.is_approved:
             return "✅ تایید شده"
         return "⏳ در انتظار تایید"
+
     verification_status.short_description = 'وضعیت'
 
     def consultation_fee_display(self, obj):
         return f"{int(obj.consultation_fee):,} تومان"
+
     consultation_fee_display.short_description = 'هزینه ویزیت'
 
     def registered_at(self, obj):
         return obj.user.date_joined.strftime('%Y/%m/%d')
+
     registered_at.short_description = 'تاریخ ثبت‌نام'
 
     @admin.action(description='✅ تایید پزشکان انتخاب شده')

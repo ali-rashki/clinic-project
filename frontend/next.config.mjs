@@ -18,7 +18,6 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "images.unsplash.com",
             },
-
             {
                 protocol: "https",
                 hostname: "images.pexels.com",
@@ -29,9 +28,10 @@ const nextConfig = {
             },
             {
                 protocol: "https",
-                hostname: "images.unsplash.com",
-                pathname: "/**",
+                hostname: "res.cloudinary.com",
+                pathname: "/dn2oz1olt/**",
             },
+            // ===============================================
         ],
     },
 };
